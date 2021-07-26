@@ -1,80 +1,35 @@
 import React, { useState } from 'react'
 
-const Statistics = (props) => {
-  if (props.all === 0) {
-    return (
-      <div>
-        No Feedback Given
-      </div>
-    )
-  }
-  return(
-  <div>
-    <table>
-        <tbody>
-          <Statistic text="Good" value={props.good} />
-          <Statistic text="Neutral" value={props.neutral} />
-          <Statistic text="Bad" value={props.bad} />
-          <Statistic text="All" value={props.all} />
-          <Statistic text="Average" value={((props.good-props.bad)/props.all).toFixed(1)} />
-          <Statistic text="Positive" value={((props.good/props.all)*100).toFixed(1)} text2="%"/>
-        </tbody>
-      </table>
-  </div>
-  )
-}
 
-const Statistic = ({text, value, text2}) =>(
-    <tr>
-      <td>{text}</td>
-      <td>{value}</td>
-      <td>{text2}</td>
-    </tr>
-)
-
-const Button = ({ handleClick, text }) => (
-  <button onClick={handleClick}>
+const Button = ({ onClick, text }) => (
+  <button onClick={onClick}>
     {text}
   </button>
 )
 
+
+
 const App = () => {
-  const [good, setGood] = useState(0)
-  const [neutral, setNeutral] = useState(0)
-  const [bad, setBad] = useState(0)
-  const [all, setAll] = useState(0)
-  const [average, setAverage] = useState(0)
-  const [positive, setPositive] = useState(0)
+  const anecdotes = [
+    'If it hurts, do it more often',
+    'Adding manpower to a late software project makes it later!',
+    'The first 90 percent of the code accounts for the first 90 percent of the development time...The remaining 10 percent of the code accounts for the other 90 percent of the development time.',
+    'Any fool can write code that a computer can understand. Good programmers write code that humans can understand.',
+    'Premature optimization is the root of all evil.',
+    'Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.',
+    'Programming without an extremely heavy use of console.log is same as if a doctor would refuse to use x-rays or blod tests when dianosing patients'
+  ]
+   
+  const [selected, setSelected] = useState(0)
 
-  const handleGoodClick = () => {
-    setGood(good + 1)
-    setAll(all +1)
-    setAverage((good-bad)/all)
-    setPositive(good / all)
-  }
-
-  const handleNeutralClick = () => {
-    setNeutral(neutral + 1)
-    setAll(all +1)
-    setAverage((good-bad)/all)
-    setPositive(good / all)
-  }
-
-  const handleBadClick = () => {
-    setBad(bad + 1)
-    setAll(all +1)
-    setAverage((good-bad)/all)
-    setPositive(good / all)
+  const selectAneq = () => {
+    setSelected(Math.floor(Math.random() * 7))
   }
 
   return (
     <div>
-      <h1>Give Feedback</h1>
-      <Button handleClick={handleGoodClick} text="Good" />
-      <Button handleClick={handleNeutralClick} text="Neutral" />
-      <Button handleClick={handleBadClick} text="Bad" />
-      <h1>Statistics</h1>
-      <Statistics good={good} neutral={neutral} bad={bad} all={all} average={average} positive={positive}/>
+      {anecdotes[selected]} <br/>
+      <Button onClick={selectAneq} text={"Next Aneqdote"} />
     </div>
   )
 }
